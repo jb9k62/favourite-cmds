@@ -1,0 +1,29 @@
+{
+  "commands": [
+    {
+      "name": "npm-local-mcp",
+      "description": "Add local npm MCP server to Claude desktop config",
+      "command": "npm install -g @your/mcp-server"
+    },
+    {
+      "name": "git-reset-hard",
+      "description": "Hard reset current branch to HEAD, discarding all changes",
+      "command": "git reset --hard HEAD"
+    },
+    {
+      "name": "docker-clean",
+      "description": "Remove all stopped containers and unused images",
+      "command": "docker system prune -f"
+    },
+    {
+      "name": "find-large-files",
+      "description": "Find files larger than 100MB in current directory",
+      "command": "find . -type f -size +100M -ls"
+    },
+    {
+      "name": "port-kill",
+      "description": "Kill process running on specific port (replace 3000)",
+      "command": "lsof -ti:3000 | xargs kill -9"
+    }
+  ]
+}
