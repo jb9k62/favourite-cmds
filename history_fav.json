@@ -8,7 +8,7 @@
     {
       "name": "git-reset-hard",
       "description": "Hard reset current branch to HEAD, discarding all changes",
-      "command": "git reset --hard HEAD"
+      "command": "git reset --hard "
     },
     {
       "name": "docker-clean",
