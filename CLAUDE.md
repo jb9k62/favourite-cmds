@@ -9,6 +9,7 @@ This is a personal configuration repository containing a command-line tool for s
 ## Architecture
 
 - **fav.mjs**: Main CLI script using zx (Google's shell scripting library)
+
   - Provides fuzzy search interface for favorite commands
   - Integrates with fzf for interactive selection
   - Supports multiple search modes (name, description, all fields)
@@ -44,12 +45,43 @@ This is a personal configuration repository containing a command-line tool for s
 
 # Search modes
 ./fav.mjs -n docker          # Search names only
-./fav.mjs -d clean           # Search descriptions only  
+./fav.mjs -d clean           # Search descriptions only
 ./fav.mjs -a git             # Search both fields
 
 # Help
 ./fav.mjs -h
 ```
+
+## ZSH Integration
+
+The tool is designed to integrate seamlessly with zsh's readline functionality. The script outputs the selected command to stdout, which can be captured and inserted into the zsh command line buffer using `print -z`.
+
+### Setup
+
+Add this function to your `~/.zshrc`:
+
+```bash
+fav() {
+  local cmd=$(~/.config/personal_cfg/fav.mjs "$@")
+  if [[ -n "$cmd" ]]; then
+    print -z "$cmd"
+  fi
+}
+```
+
+### How it Works
+
+1. **Command Selection**: The `fav.mjs` script displays an fzf interface for selecting commands
+2. **stdout Output**: The selected command is output to stdout (no execution)
+3. **ZSH Capture**: The zsh function captures this output using command substitution `$()`
+4. **Readline Buffer**: `print -z` adds the command to zsh's readline buffer
+5. **User Control**: The command appears on the command line where it can be edited before execution
+
+The `"$@"` in the zsh function passes all arguments to the script, enabling usage like:
+
+- `fav` - Interactive search
+- `fav docker` - Search with initial query
+- `fav -d clean` - Search descriptions for "clean"
 
 ## Development Notes
 
