@@ -91,7 +91,7 @@ try {
 }
 
 // Prepare fzf input based on search mode
-// Each line format: "display_text | command_to_execute"
+// Each line format: "display_text |> command_to_execute"
 function prepareFzfInput() {
   return favorites.commands
     .map((cmd) => {
@@ -111,7 +111,7 @@ function prepareFzfInput() {
           displayText = `${cmd.name} • ${cmd.description}`;
           break;
       }
-      return `${displayText} | ${cmd.command}`;
+      return `${displayText} |> ${cmd.command}`;
     })
     .join("\n");
 }
@@ -121,7 +121,7 @@ function getFzfOptions() {
   const baseQuery = searchTerm ? `--query="${searchTerm}"` : "";
 
   // fzf options explained:
-  // --delimiter=' | ' : Split on pipe delimiter
+  // --delimiter=' |> ' : Split on pipe delimiter
   // --with-nth=1 : Only search/display the first field (before the pipe)
   // --preview='echo {2}' : Show the command (field 2) in preview window
   // --preview-window : Configure preview window layout and behavior
@@ -136,7 +136,7 @@ function getFzfOptions() {
   // --margin : Add margins for better visual appearance
 
   return [
-    '--delimiter=" | "',
+    '--delimiter=" |> "',
     "--with-nth=1",
     '--preview="echo {2}"',
     '--preview-window="down:3:wrap:border"',
@@ -179,8 +179,8 @@ if (!selection) {
   process.exit(0);
 }
 
-// Extract command from selection (everything after the last ' | ')
-const parts = selection.split(" | ");
+// Extract command from selection (everything after the last ' |> ')
+const parts = selection.split(" |> ");
 if (parts.length < 2) {
   console.error("Error: Invalid selection format");
   process.exit(1);
